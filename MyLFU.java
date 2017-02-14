@@ -2,7 +2,9 @@ import java.util.*;
 
 public class MyLFU {
 
-    // hashmap + Double LinkedList with check frequent
+    // two hashmap + Double LinkedList
+	// one is for key and node
+	// another is for freqHead and node
     
     // private nested class DLNode
     private static class DLNode{
