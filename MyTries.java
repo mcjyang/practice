@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 
 class MyTries {
 
@@ -12,9 +12,16 @@ class MyTries {
 	}
 	
 	private Node root;
+	private int len;
 	
 	public MyTries() {
 		root = new Node();
+		len = 0;
+	}
+	
+	public MyTries(int len){
+		root = new Node();
+		this.len = len;
 	}
 	
 	/* insert word */
@@ -51,24 +58,88 @@ class MyTries {
 	}
 	
 	/* return all words start with prefix*/
-	public List<String> allWordsWith(String prefix){
-		return null;
+	public List<String> findByPrefix(String prefix){
+		List<String> res = new LinkedList<>();
+        Node cur = root;
+        for(int i = 0; i < prefix.length(); i++){
+            char c = prefix.charAt(i);
+            if(cur.children[c-'a'] == null) return res;
+            cur = cur.children[c-'a'];
+        }
+        DFSHelper(res, new StringBuilder(prefix), cur, len-prefix.length());
+        return res;
+	}
+	
+	public void DFSHelper(List<String> res, StringBuilder sb, Node cur, int k){
+        if(k==0){
+            res.add(sb.toString());
+            return;
+        }
+        for(int i = 0; i < 26; i++){
+            if(cur.children[i]!=null){
+                char tem = (char) ('a'+i);
+                sb.append(tem);
+                DFSHelper(res, sb, cur.children[i], k-1);
+                sb.deleteCharAt(sb.length()-1);
+            }   
+        }
+        return;
+    }
+	
+	// also a DFS: to search next words by changing prefix
+	public void search(List<List<String>> ans, List<String> tem){
+		if(tem.size() == this.len){
+			ans.add(new LinkedList<>(tem));
+			return;
+		}
+		
+		int idx = tem.size();
+		StringBuilder sb = new StringBuilder();
+		for(String s: tem){
+			sb.append(s.charAt(idx));
+		}
+		List<String> allWords = this.findByPrefix(sb.toString());
+		for(String w: allWords){
+			tem.add(w);
+			search(ans, tem);
+			tem.remove(tem.size()-1);
+		}
+		return;
 	}
 	
 	
 	public static void main(String[] args){
-		MyTries prefixTree = new MyTries();
-		System.out.println(prefixTree.startsWith("hi")); // F
-		System.out.println(prefixTree.search("hello")); // F
-		prefixTree.insert("helloha");
-		System.out.println(prefixTree.search("hello")); // F
-		System.out.println(prefixTree.startsWith("hello")); // T
-		System.out.println(prefixTree.search("helloha")); // T
-		prefixTree.insert("hellohb");
-		prefixTree.insert("cc");
-		System.out.println(prefixTree.search("hellohaa")); // F
-		System.out.println(prefixTree.startsWith("hellohb")); // T
-		System.out.println(prefixTree.startsWith("c")); // T
+//		Example 1: Basic Tries
+//		MyTries prefixTree = new MyTries();
+//		System.out.println(prefixTree.startsWith("hi")); // F
+//		System.out.println(prefixTree.search("hello")); // F
+//		prefixTree.insert("helloha");
+//		System.out.println(prefixTree.search("hello")); // F
+//		System.out.println(prefixTree.startsWith("hello")); // T
+//		System.out.println(prefixTree.search("helloha")); // T
+//		prefixTree.insert("hellohb");
+//		prefixTree.insert("cc");
+//		System.out.println(prefixTree.search("hellohaa")); // F
+//		System.out.println(prefixTree.startsWith("hellohb")); // T
+//		System.out.println(prefixTree.startsWith("c")); // T
+		
+//		Example 2: Words Square
+		MyTries pt = new MyTries(4);
+		String[] words = {"abat","baba","atan","atal"};
+		for(String s: words){
+			pt.insert(s);
+		}
+		
+		List<List<String>> res = new LinkedList<>();
+		List<String> tem = new LinkedList<>();
+		for(String s: words){
+			tem.add(s);
+			pt.search(res, tem);
+			tem.remove(tem.size()-1);
+		}
+		
+		System.out.println(res);
+		
 	}
 	
 
