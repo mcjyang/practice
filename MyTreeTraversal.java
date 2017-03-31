@@ -28,7 +28,7 @@ public class MyTreeTraversal {
 		return root;
 	}
 	
-	// in-order Morris traversal with O(1) space (2 pointers)
+	// Morris traversal with O(1) space (2 pointers)
 	public void morrisTreaversal(){
 		TreeNode node = root;
 		TreeNode pre = null;
@@ -41,10 +41,11 @@ public class MyTreeTraversal {
 				if(pre.right != null){
 					// if true then pre.right == node: recover the tree, output the node.val, go to node.right
 					pre.right = null;
-					System.out.println(node.val);
+					System.out.println(node.val); // for in-order
 					node = node.right;
 				}else{
 					// if false then pre.right == null: pointer pre.right to node, go to node.left
+					// System.out.println(node.val); // for pre-order
 					pre.right = node;
 					node = node.left;
 				}
