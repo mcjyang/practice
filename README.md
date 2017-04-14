@@ -21,4 +21,5 @@ To be continued
 ## Dijkstra
 Important.  Need more practice.
 
-https://guides.github.com/features/mastering-markdown/
+1. https://guides.github.com/features/mastering-markdown/
+2. https://kingofamani.gitbooks.io/git-teach/content/chapter_6_gitbook/markdown.html
