@@ -8,16 +8,16 @@ Also, this README.md is for the purpose of practicing markdown, so don't take it
 1. in-order
 - common metho
 - how can we design in-order in O(1) space
- - Morris Traversal (2 ptrs)
+  - Morris Traversal (2 ptrs)
 
 2. pre-order
 3. post-order
 
 ## LRU
 To be continued
-`<here is the code>`
+`<cd user>`
 
 ## Dijkstra
 Important.  Need more practice.
 
-[markdown details] (https://guides.github.com/features/mastering-markdown/)
+https://guides.github.com/features/mastering-markdown/
